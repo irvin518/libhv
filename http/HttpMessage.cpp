@@ -595,6 +595,11 @@ int HttpMessage::ParseBody() {
         }
         boundary += strlen("boundary=");
         std::string strBoundary(boundary);
+        size_t pos = strBoundary.find(';');
+        if (pos != std::string::npos)
+        {
+            strBoundary = strBoundary.substr(0, pos);
+        }
         strBoundary = trim_pairs(strBoundary, "\"\"\'\'");
         return parse_multipart(body, form, strBoundary.c_str());
     }
